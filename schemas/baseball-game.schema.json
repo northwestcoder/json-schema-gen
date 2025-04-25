@@ -1,0 +1,163 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Baseball Game",
+  "description": "Schema for a baseball game including teams, players, and game events",
+  "version": "1.0.0",
+  "type": "object",
+  "properties": {
+    "gameId": {
+      "type": "string",
+      "description": "Unique identifier for the game"
+    },
+    "date": {
+      "type": "string",
+      "format": "date",
+      "description": "Date of the game"
+    },
+    "startTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "Scheduled start time of the game"
+    },
+    "status": {
+      "type": "string",
+      "enum": [
+        "Scheduled",
+        "In Progress",
+        "Final",
+        "Postponed",
+        "Cancelled",
+        "Suspended"
+      ],
+      "description": "Current status of the game"
+    },
+    "venue": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "city": { "type": "string" },
+        "state": { "type": "string" },
+        "attendance": { "type": "integer" },
+        "weather": {
+          "type": "object",
+          "properties": {
+            "temperature": { "type": "number" },
+            "conditions": { "type": "string" },
+            "windSpeed": { "type": "number" },
+            "windDirection": { "type": "string" }
+          }
+        }
+      },
+      "required": ["name", "city", "state"]
+    },
+    "homeTeam": {
+      "type": "object",
+      "properties": {
+        "teamId": { "type": "string" },
+        "name": { "type": "string" },
+        "score": { "type": "integer" },
+        "hits": { "type": "integer" },
+        "errors": { "type": "integer" },
+        "startingPitcher": { "type": "string" },
+        "currentPitcher": { "type": "string" }
+      },
+      "required": ["teamId", "name", "score"]
+    },
+    "awayTeam": {
+      "type": "object",
+      "properties": {
+        "teamId": { "type": "string" },
+        "name": { "type": "string" },
+        "score": { "type": "integer" },
+        "hits": { "type": "integer" },
+        "errors": { "type": "integer" },
+        "startingPitcher": { "type": "string" },
+        "currentPitcher": { "type": "string" }
+      },
+      "required": ["teamId", "name", "score"]
+    },
+    "innings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "inningNumber": { "type": "integer" },
+          "half": {
+            "type": "string",
+            "enum": ["Top", "Bottom"]
+          },
+          "homeScore": { "type": "integer" },
+          "awayScore": { "type": "integer" },
+          "outs": { "type": "integer" },
+          "runners": {
+            "type": "object",
+            "properties": {
+              "first": { "type": "boolean" },
+              "second": { "type": "boolean" },
+              "third": { "type": "boolean" }
+            }
+          }
+        },
+        "required": ["inningNumber", "half", "homeScore", "awayScore", "outs"]
+      }
+    },
+    "gameEvents": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "eventId": { "type": "string" },
+          "inning": { "type": "integer" },
+          "half": { "type": "string" },
+          "batter": { "type": "string" },
+          "pitcher": { "type": "string" },
+          "eventType": {
+            "type": "string",
+            "enum": [
+              "Strikeout",
+              "Walk",
+              "Single",
+              "Double",
+              "Triple",
+              "Home Run",
+              "Ground Out",
+              "Fly Out",
+              "Line Out",
+              "Error",
+              "Hit By Pitch",
+              "Sacrifice",
+              "Wild Pitch",
+              "Passed Ball",
+              "Stolen Base",
+              "Caught Stealing"
+            ]
+          },
+          "description": { "type": "string" },
+          "runsScored": { "type": "integer" },
+          "timestamp": { "type": "string", "format": "date-time" }
+        },
+        "required": ["eventId", "inning", "half", "batter", "pitcher", "eventType"]
+      }
+    },
+    "umpires": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "firstName": { "type": "string" },
+          "lastName": { "type": "string" },
+          "position": {
+            "type": "string",
+            "enum": ["Home Plate", "First Base", "Second Base", "Third Base"]
+          }
+        },
+        "required": ["firstName", "lastName", "position"]
+      }
+    },
+    "gameNotes": {
+      "type": "string",
+      "description": "Additional notes about the game"
+    }
+  },
+  "required": ["gameId", "date", "startTime", "status", "venue", "homeTeam", "awayTeam"]
+} 
