@@ -1,0 +1,162 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Baseball Team",
+  "description": "Schema for a baseball team including roster, statistics, and team information",
+  "version": "1.0.0",
+  "type": "object",
+  "properties": {
+    "teamId": {
+      "type": "string",
+      "description": "Unique identifier for the team"
+    },
+    "name": {
+      "type": "string",
+      "description": "Official team name"
+    },
+    "nickname": {
+      "type": "string",
+      "description": "Team nickname or mascot"
+    },
+    "league": {
+      "type": "string",
+      "enum": ["AL", "NL"],
+      "description": "American League or National League"
+    },
+    "division": {
+      "type": "string",
+      "enum": ["East", "Central", "West"],
+      "description": "Division within the league"
+    },
+    "city": {
+      "type": "string",
+      "description": "Home city of the team"
+    },
+    "state": {
+      "type": "string",
+      "description": "Home state of the team"
+    },
+    "stadium": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "capacity": { "type": "integer" },
+        "yearBuilt": { "type": "integer" },
+        "fieldType": {
+          "type": "string",
+          "enum": ["Grass", "Artificial", "Hybrid"]
+        },
+        "dimensions": {
+          "type": "object",
+          "properties": {
+            "leftField": { "type": "number" },
+            "centerField": { "type": "number" },
+            "rightField": { "type": "number" }
+          },
+          "required": ["leftField", "centerField", "rightField"]
+        }
+      },
+      "required": ["name", "capacity"]
+    },
+    "colors": {
+      "type": "object",
+      "properties": {
+        "primary": { "type": "string" },
+        "secondary": { "type": "string" },
+        "tertiary": { "type": "string" }
+      },
+      "required": ["primary", "secondary"]
+    },
+    "roster": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "playerId": { "type": "string" },
+          "firstName": { "type": "string" },
+          "lastName": { "type": "string" },
+          "number": { "type": "integer" },
+          "position": {
+            "type": "string",
+            "enum": [
+              "P", "C", "1B", "2B", "3B", "SS", "LF", "CF", "RF",
+              "DH", "RP", "SP"
+            ]
+          },
+          "battingOrder": { "type": "integer" },
+          "battingHand": {
+            "type": "string",
+            "enum": ["L", "R", "S"]
+          },
+          "throwingHand": {
+            "type": "string",
+            "enum": ["L", "R"]
+          },
+          "height": { "type": "string" },
+          "weight": { "type": "integer" },
+          "birthDate": { "type": "string", "format": "date" },
+          "status": {
+            "type": "string",
+            "enum": ["Active", "Injured", "Suspended", "Disabled"]
+          }
+        },
+        "required": ["playerId", "firstName", "lastName", "position"]
+      }
+    },
+    "coachingStaff": {
+      "type": "object",
+      "properties": {
+        "manager": {
+          "type": "object",
+          "properties": {
+            "firstName": { "type": "string" },
+            "lastName": { "type": "string" },
+            "yearsExperience": { "type": "integer" }
+          },
+          "required": ["firstName", "lastName"]
+        },
+        "coaches": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "firstName": { "type": "string" },
+              "lastName": { "type": "string" },
+              "role": { "type": "string" }
+            },
+            "required": ["firstName", "lastName", "role"]
+          }
+        }
+      },
+      "required": ["manager"]
+    },
+    "seasonStats": {
+      "type": "object",
+      "properties": {
+        "wins": { "type": "integer" },
+        "losses": { "type": "integer" },
+        "winningPercentage": { "type": "number" },
+        "gamesBack": { "type": "number" },
+        "runsScored": { "type": "integer" },
+        "runsAllowed": { "type": "integer" },
+        "homeRecord": {
+          "type": "object",
+          "properties": {
+            "wins": { "type": "integer" },
+            "losses": { "type": "integer" }
+          },
+          "required": ["wins", "losses"]
+        },
+        "awayRecord": {
+          "type": "object",
+          "properties": {
+            "wins": { "type": "integer" },
+            "losses": { "type": "integer" }
+          },
+          "required": ["wins", "losses"]
+        }
+      },
+      "required": ["wins", "losses", "winningPercentage"]
+    }
+  },
+  "required": ["teamId", "name", "league", "division", "city", "roster", "coachingStaff"]
+} 

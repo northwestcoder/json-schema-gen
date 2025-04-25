@@ -1,0 +1,14 @@
+{
+  "id": "user-123",
+  "username": "johndoe",
+  "email": "john.doe@example.com",
+  "profile": {
+    "firstName": "John",
+    "lastName": "Doe",
+    "age": 30
+  },
+  "preferences": {
+    "theme": "dark",
+    "notifications": true
+  }
+} 
